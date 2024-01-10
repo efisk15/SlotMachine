@@ -9,9 +9,9 @@ COLS = 3
 
 symbol_count = {
     "A": 2,
-    "B": 4,
-    "C": 6,
-    "D": 8,
+    "B": 2,
+    "C": 4,
+    "D": 4,
 }
 
 symbol_value = {
@@ -85,7 +85,7 @@ def get_number_of_lines():
             lines = int(lines)
             if 1 <= lines <= MAX_LINES:
                 break
-            else: print("Must be a number between 0 and " + MAX_LINES + " .")
+            else: print("Must be a number between 0 and " + str(MAX_LINES) + " .")
         else:
             print("Please enter a number.")
 
@@ -105,8 +105,7 @@ def get_bet():
 
     return bet
 
-def main():
-    balance = deposit()
+def spin(balance):
     lines = get_number_of_lines()
     while True:
         bet = get_bet()
@@ -124,6 +123,18 @@ def main():
     winning, winning_lines = check_winnings(slots, lines, bet, symbol_value)
     print(f"You won ${winning}.")
     print(f"You won on lines: ", *winning_lines)
+    return winning - total_bet
 
+def main():
+    balance = deposit()
+    while True:
+        print(f"Current valance is ${balance}")
+        answer = input("press enter to play (q to quit).")
+        if answer == "q":
+            break
+        balance += spin(balance)
+
+    print(f"You left with ${balance}")
+    
 
 main()
